@@ -1,13 +1,29 @@
 const btnSave = document.querySelector('#btnSave');
 
-btnSave.addEventListener('click', ()=>{
+btnSave.addEventListener('click', async(e)=>{
+    e.preventDefault();
     // Getting all inputs
-    const allInputs = document.querySelectorAll('.input-validator');
-    allInputs.forEach((input)=>{
+    let allInputs = document.querySelectorAll('.input-validator');
+    allInputs = Array.from(allInputs);
+    const results = allInputs.filter((input)=>{
         if (input.value.length < 1){
             // Error message
+            showToast('error', 'Field required');
+            return false;
+        }else{
+            return true;
         }
     })
+    // console.log(results);
+    if (results.length > 2){
+        const first_name = document.querySelector("#first_name").value;
+        const last_name = document.querySelector("#last_name").value;
+        const age = document.querySelector("#age").value;
+        const res = await axios.post('/', {first_name, last_name, age});
+        showToast('success', 'Data saved successfully');
+        res.redirect('/');
+        console.log(res);
+    }
 });
 
 // Toast message function
@@ -25,7 +41,7 @@ function showToast(status, message){
       })
       
       Toast.fire({
-        icon: 'success',
-        title: 'Signed in successfully'
+        icon: status,
+        title: message
       })
 }

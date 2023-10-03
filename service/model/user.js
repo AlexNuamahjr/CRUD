@@ -9,12 +9,15 @@ const User = dbConnect.define('users', {
     },
     first_name: {
         type: DataTypes.STRING,
+        allowNull: false
     },
     last_name: {
         type: DataTypes.STRING,
+        allowNull: false
     },
     age: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
 })
 

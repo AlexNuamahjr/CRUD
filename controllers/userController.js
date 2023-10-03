@@ -7,15 +7,23 @@ const index = async(req, res)=>{
 };
 
 const home = async(req, res)=>{
-    const {first_name, last_name, age} = req.body;
-
-    await User.create({first_name, last_name, age});
-    res.redirect('/');
+    try {
+        const {first_name, last_name, age} = req.body;
+        await User.create({first_name, last_name, age});
+        res.redirect('/');
+    } catch (error) {
+        console.log(error);
+    }
+    
 
 }
 
+const testing = (req, res)=>{
+    res.send('It is working');
+}
 
 module.exports = {
     index,
-    home
+    home,
+    testing
 }
